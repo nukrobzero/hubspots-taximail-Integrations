@@ -9,7 +9,7 @@ interface ResponseData {
 
 export default function Second({ secondID, resData }: ResponseData) {
   const [sessionID, setSessionID] = useState(secondID);
-  const [listId, setListId] = useState("");
+  const [listId, setListId] = useState(resData.data.lists?.list_id);
 
   const handleListIdChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setListId(event.target.value);
