@@ -64,6 +64,9 @@ export default function CreateLists({}: FormData) {
         </div>
 
         <button type="submit">Submit</button>
+        <button>
+            <Link href={`/second/${sessionID}`}>Skip</Link>
+          </button>
       </form>
       {responseData && (
         <div>
