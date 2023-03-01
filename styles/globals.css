@@ -1,0 +1,19 @@
+div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+
+}
+
+a:hover {
+    color: blue;
+}
+
+p {
+    color: red;
+}
