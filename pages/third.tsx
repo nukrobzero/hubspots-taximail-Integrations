@@ -1,5 +1,6 @@
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 interface FormData {
@@ -17,9 +18,11 @@ interface TaximailResponse {
 }
 
 export default function Thirds({}: FormData) {
+  const router = useRouter();
+  const { sessionID, listID } = router.query;
   const [formData, setFormData] = useState({
-    TAXI_MAIL_SESSION_ID: "",
-    listId: "",
+    TAXI_MAIL_SESSION_ID: sessionID,
+    listId: listID,
     email: "",
     firstname: "",
     lastname: "",
@@ -30,6 +33,16 @@ export default function Thirds({}: FormData) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (
+      !formData.TAXI_MAIL_SESSION_ID ||
+      !formData.listId ||
+      !formData.email ||
+      !formData.firstname ||
+      !formData.lastname
+    ) {
+      alert("Please enter all input.");
+      return;
+    }
     try {
       const response = await axios.post("/api/importTaximailContact", formData);
       console.log(response.data);
@@ -63,7 +76,7 @@ export default function Thirds({}: FormData) {
           />
         </div>
         <div>
-          <label htmlFor="listId">Your list ID:(we use 1)</label>
+          <label htmlFor="listId">Your list ID:</label>
           <input
             type="text"
             id="listId"

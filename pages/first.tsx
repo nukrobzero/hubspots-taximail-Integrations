@@ -2,44 +2,34 @@ import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 
-interface FormData {
-  api_key: string;
-  secret_key: string;
-}
+export default function First() {
+  const [apiKey, setApiKey] = useState("");
+  const [secretKey, setSecretKey] = useState("");
+  const [responseData, setResponseData] = useState("");
 
-interface TaximailResponse {
-  session_id: string;
-  status: string;
-  message: string;
-  data: any;
-}
-
-export default function First({}: FormData) {
-  const [formData, setFormData] = useState({
-    api_key: "",
-    secret_key: "",
-  });
-  const [responseData, setResponseData] = useState<TaximailResponse | null>(
-    null
-  );
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!apiKey || !secretKey) {
+      alert("Please enter both API Key and Secret Key.");
+      return;
+    }
+    const dataForm = {
+      apiKey,
+      secretKey,
+    };
+
     try {
-      const response = await axios.post("/api/taximailLogin", formData);
+      const response = await axios.post("/api/taximailLogin", dataForm);
       console.log("Your Session ID:", response.data.data.session_id);
-      setResponseData(response.data);
+      setResponseData(response.data.data.session_id);
       // handle successful response
     } catch (error) {
-      console.error(error);
+      alert('API Key or Secret Key incorrect');
       // handle error response
     }
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
-    setFormData({ ...formData, [id]: value });
-  };
   return (
     <>
       <div>
@@ -52,8 +42,8 @@ export default function First({}: FormData) {
           <input
             type="text"
             id="api_key"
-            value={formData.api_key}
-            onChange={handleInputChange}
+            value={apiKey}
+            onChange={({ target }) => setApiKey(target?.value)}
           />
         </div>
         <div>
@@ -61,19 +51,17 @@ export default function First({}: FormData) {
           <input
             type="text"
             id="secret_key"
-            value={formData.secret_key}
-            onChange={handleInputChange}
+            value={secretKey}
+            onChange={({ target }) => setSecretKey(target?.value)}
           />
         </div>
         <button type="submit">Submit</button>
       </form>
       {responseData && (
         <div>
-          <h4>Login successful!</h4>
-          <h4>Your Session ID: {responseData?.data.session_id}</h4>
-          <p>Copy Your Session ID for next step</p>
+          <h3>Login Successfuly!</h3>
           <button>
-            <Link href={`/second?session_id=${responseData?.data.session_id}`}>Next step</Link>
+            <Link href={`/create-list?sessionID=${responseData}`}>Next step</Link>
           </button>
         </div>
       )}

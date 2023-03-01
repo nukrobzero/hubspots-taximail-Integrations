@@ -6,12 +6,12 @@ export default async function TaximailLogin(
   res: NextApiResponse
 ) {
   try {
-    const { api_key, secret_key } = req.body;
+    const { apiKey, secretKey } = req.body;
     const response = await axios.post(
       "https://api.taximail.com/v2/user/login",
       {
-        api_key: api_key,
-        secret_key: secret_key,
+        api_key: apiKey,
+        secret_key: secretKey,
       },
       {
         headers: {

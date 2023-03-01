@@ -1,5 +1,6 @@
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 interface FormData {
@@ -15,9 +16,11 @@ interface TaximailResponse {
 }
 
 export default function Allcontacts({}: FormData) {
+  const router = useRouter();
+  const { sessionID, listID } = router.query;
   const [formData, setFormData] = useState({
-    TAXI_MAIL_SESSION_ID: "",
-    listId: "",
+    TAXI_MAIL_SESSION_ID: sessionID,
+    listId: listID,
     HUBSPOT_KEY: "",
   });
   const [responseData, setResponseData] = useState<TaximailResponse | null>(
@@ -25,6 +28,15 @@ export default function Allcontacts({}: FormData) {
   );
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (
+      !formData.TAXI_MAIL_SESSION_ID ||
+      !formData.listId ||
+      !formData.HUBSPOT_KEY
+    ) {
+      alert("Please enter all input.");
+      return;
+    }
 
     try {
       const response = await axios.post("/api/all/all", formData);
@@ -50,9 +62,7 @@ export default function Allcontacts({}: FormData) {
       <h1>Import All from Hubspot</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="HUBSPOT_KEY">
-            Your HUBSPOT KEY:
-          </label>
+          <label htmlFor="HUBSPOT_KEY">Your HUBSPOT KEY:</label>
           <input
             type="text"
             id="HUBSPOT_KEY"

@@ -1,5 +1,6 @@
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 interface FormData {
@@ -12,8 +13,10 @@ interface TaximailResponse {
 }
 
 export default function CreateLists({}: FormData) {
+  const router = useRouter();
+  const { sessionID } = router.query;
   const [formData, setFormData] = useState({
-    taxi_mail_session_id: "",
+    taxi_mail_session_id: sessionID,
   });
   const [responseData, setResponseData] = useState<TaximailResponse | null>(
     null
@@ -21,16 +24,20 @@ export default function CreateLists({}: FormData) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!formData.taxi_mail_session_id) {
+      alert("Please enter sessionID.");
+      return;
+    }
     try {
       const response = await axios.post(
         "/api/importListContactsTaxi",
         formData
       );
-      console.log("Your List ID:", response.data.data.list_id);
       setResponseData(response.data);
       // handle successful response
     } catch (error) {
-      console.error(error);
+      alert("SESSION ID incorrect. Please try again!");
+      return;
       // handle error response
     }
   };
@@ -62,9 +69,8 @@ export default function CreateLists({}: FormData) {
         <div>
           <h4>list ID created successful!</h4>
           <h4>Your list ID: {responseData?.data.list_id}</h4>
-          <p>Copy Your list ID for next step</p>
           <button>
-            <Link href="/third">Next step</Link>
+            <Link href={`/second/${sessionID}`}>Next step</Link>
           </button>
         </div>
       )}
