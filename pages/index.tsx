@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <h1>Hub spot Integrations Taximail Tools</h1>
+      <h1>Hub spot Integrations Taximail Tools (Contact Only)</h1>
       <div>
         <h4>First Integrations Follow step below</h4>
         <Link href="/first">Installation</Link>
