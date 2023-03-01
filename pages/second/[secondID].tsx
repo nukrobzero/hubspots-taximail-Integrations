@@ -59,7 +59,7 @@ export default function Second({ secondID, resData }: ResponseData) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 };
 
