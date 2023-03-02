@@ -1,7 +1,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface FormData {
   TAXI_MAIL_SESSION_ID: string;
@@ -27,12 +27,12 @@ export default function Thirds({}: FormData) {
     firstname: "",
     lastname: "",
   });
+
   const [responseData, setResponseData] = useState<TaximailResponse | null>(
     null
   );
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     if (
       !formData.TAXI_MAIL_SESSION_ID ||
       !formData.listId ||

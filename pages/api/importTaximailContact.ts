@@ -6,14 +6,15 @@ export default async function ImportTaximailContact(
   res: NextApiResponse
 ) {
   try {
-    const { listId, email, firstname, lastname, TAXI_MAIL_SESSION_ID } = req.body;
+    const { listId, email, firstname, lastname, TAXI_MAIL_SESSION_ID } =
+      req.body;
     const response = await axios.post(
       `https://api.taximail.com/v2/list/${listId}/subscribers/import`,
       {
         mode_import: "copyandpaste",
-        subscribers_data: `${email},${firstname},${lastname}`,
+        subscribers_data: `example1@example.com,Chinnawat AAA,Keawyom AAA|:|example2@example.com,Chinnawat BBB,Keawyom BBB`,
         field_terminator: ",",
-        matched_fields: ["email", "CF_Firstname", "CF_Lastname"],
+        matched_fields: ["email", "Firstname", "Lastname"],
         update_duplicates: true,
         not_send_optin_email: true,
         add_to_suppression_list: "none",
@@ -25,7 +26,6 @@ export default async function ImportTaximailContact(
         },
       }
     );
-
     res.json(response.data);
   } catch (error) {
     console.error(error);

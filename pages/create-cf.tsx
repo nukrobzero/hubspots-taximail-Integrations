@@ -56,6 +56,9 @@ export default function CreateCF() {
           <form onSubmit={handleSubmit}>
             <button type="submit">Create Fields</button>
           </form>
+          {responsehaveClick && (
+            <h1>CustomFields created sucessfuly!</h1>
+          )}
           <h4>ฺBut have CustomFields created</h4>
           <button>
             <Link href={`/third?sessionID=${sessionID}&listID=${listID}`}>
