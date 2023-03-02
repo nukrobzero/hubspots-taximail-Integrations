@@ -8,25 +8,32 @@ export default async function ImportTaximailContact(
   try {
     const { listId, email, firstname, lastname, TAXI_MAIL_SESSION_ID } =
       req.body;
-    const response = await axios.post(
+
+    const requestData = {
+      mode_import: "copyandpaste",
+      subscribers_data: `${email}, ${firstname}, ${lastname}`,
+      matched_fields: ["email", "Firstname", "Lastname"],
+      field_terminator: ",",
+      update_duplicates: true,
+      not_send_optin_email: true,
+      add_to_suppression_list: "none",
+    };
+
+    console.log("Data in the request body:", requestData);
+
+    const response = await fetch(
       `https://api.taximail.com/v2/list/${listId}/subscribers/import`,
       {
-        mode_import: "copyandpaste",
-        subscribers_data: `example1@example.com,Chinnawat AAA,Keawyom AAA|:|example2@example.com,Chinnawat BBB,Keawyom BBB`,
-        field_terminator: ",",
-        matched_fields: ["email", "Firstname", "Lastname"],
-        update_duplicates: true,
-        not_send_optin_email: true,
-        add_to_suppression_list: "none",
-      },
-      {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${TAXI_MAIL_SESSION_ID}`,
         },
+        body: JSON.stringify(requestData),
       }
     );
-    res.json(response.data);
+    const data = await response.json();
+    res.json(data);
   } catch (error) {
     console.error(error);
     res
