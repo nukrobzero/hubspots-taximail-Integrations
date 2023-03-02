@@ -9,7 +9,7 @@ interface ResponseData {
 
 export default function Second({ secondID, resData }: ResponseData) {
   const [sessionID, setSessionID] = useState(secondID);
-  const [listId, setListId] = useState(resData.data.lists?.list_id);
+  const [listId, setListId] = useState(resData.data.lists[0].list_id);
 
   const handleListIdChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setListId(event.target.value);
@@ -38,18 +38,10 @@ export default function Second({ secondID, resData }: ResponseData) {
           ))}
         </select>
       </div>
-<div>
-  <h2>*Go add Custom Filed in TaxiMail</h2>
-  <h3>2 Fileds = Firstname, Lastname and click Next step</h3>
-</div>
+      <br/>
       <button>
-        <Link href={`/third?sessionID=${sessionID}&listID=${listId}`}>
-          Next step (add single contact)
-        </Link>
-      </button>
-      <button>
-        <Link href={`/allcontact?sessionID=${sessionID}&listID=${listId}`}>
-          Next step (add All contact)
+        <Link href={`/create-cf?sessionID=${sessionID}&listID=${listId}`}>
+          Next step
         </Link>
       </button>
     </>
@@ -59,7 +51,7 @@ export default function Second({ secondID, resData }: ResponseData) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
-    fallback: 'blocking',
+    fallback: "blocking",
   };
 };
 
