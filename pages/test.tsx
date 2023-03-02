@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Test() {
   const listID = "1";
-  const sessionID = "bede8bb96d65f2456c2692fcbdd524b5";
+  const sessionID = "";
   const [data, setData] = useState([]);
   const allData = {
     sessionID,
