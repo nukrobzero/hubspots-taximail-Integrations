@@ -62,7 +62,7 @@ export default function First() {
         <div>
           <h3>Login Successfuly!</h3>
           <button>
-            <Link href={`/second/${responseData}`}>Next step</Link>
+            <Link href={`/create-list?sessionID=${responseData}`}>Next step</Link>
           </button>
         </div>
       )}
