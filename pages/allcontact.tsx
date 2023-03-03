@@ -17,6 +17,7 @@ interface TaximailResponse {
 
 export default function Allcontacts({}: FormData) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const { sessionID, listID } = router.query;
   const [formData, setFormData] = useState({
     TAXI_MAIL_SESSION_ID: sessionID,
@@ -37,16 +38,18 @@ export default function Allcontacts({}: FormData) {
       alert("Please enter all input.");
       return;
     }
-
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/all/all", formData);
       console.log(response.data);
       setResponseData(response.data);
+      setIsLoading(false);
       // handle successful response
     } catch (error) {
       console.error(error);
       // handle error response
     }
+    
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +59,7 @@ export default function Allcontacts({}: FormData) {
 
   return (
     <>
+      {isLoading && <p>Loading...</p>}
       <div>
         <Link href="/">Back to Home</Link>
       </div>
@@ -82,7 +86,7 @@ export default function Allcontacts({}: FormData) {
           />
         </div>
         <div>
-          <label htmlFor="listId">Your list ID:(we use 1)</label>
+          <label htmlFor="listId">Your list ID:</label>
           <input
             type="text"
             id="listId"

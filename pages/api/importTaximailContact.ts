@@ -11,10 +11,9 @@ export default async function ImportTaximailContact(
 
     const requestData = {
       mode_import: "copyandpaste",
-      subscribers_data: `${email}, ${firstname}, ${lastname}`,
-      matched_fields: ["email", "Firstname", "Lastname"],
+      subscribers_data: `${email},${firstname},${lastname}`,
       field_terminator: ",",
-      update_duplicates: true,
+      matched_fields: ["email", "Firstname", "Lastname"],
       not_send_optin_email: true,
       add_to_suppression_list: "none",
     };

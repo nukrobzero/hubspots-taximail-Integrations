@@ -9,10 +9,6 @@ export default function Home() {
         <Link href="/first">Installation</Link>
         <p>*It takes more than 20 minutes if there is a lot of information.</p>
       </div>
-      <div>
-        <h4>Delete All Data Contacts on Taximail</h4>
-        <Link href="/deleteAll">Click</Link>
-      </div>
     </>
   );
 }

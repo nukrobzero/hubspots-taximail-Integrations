@@ -38,10 +38,15 @@ export default function Second({ secondID, resData }: ResponseData) {
           ))}
         </select>
       </div>
-      <br/>
+      <br />
       <button>
-        <Link href={`/create-cf?sessionID=${sessionID}&listID=${listId}`}>
-          Next step
+        <Link href={`/third?sessionID=${sessionID}&listID=${listId}`}>
+          Next step (add single contact)
+        </Link>
+      </button>
+      <button>
+        <Link href={`/allcontact?sessionID=${sessionID}&listID=${listId}`}>
+          Next step (add All contact)
         </Link>
       </button>
     </>
@@ -66,5 +71,6 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   const resData = await response.json();
   return {
     props: { secondID, resData },
+    revalidate: 1,
   };
 };
