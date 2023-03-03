@@ -28,7 +28,7 @@ export default async function getContactsHubspot(
         },
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer pat-na1-4aa0abe2-6254-45f5-a34c-475b07263fb8`,
+          Authorization: `Bearer ${process.env.HUBSPOT_KEY}`,
         },
       }
     );
